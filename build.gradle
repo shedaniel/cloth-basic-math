@@ -1,0 +1,76 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'maven'
+    id 'signing'
+    id 'com.jfrog.bintray' version '1.8.4'
+}
+
+group 'me.shedaniel.cloth'
+version '0.1.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocs(type: Javadoc) {
+    source = sourceSets.main.allJava
+}
+
+task javadocsJar(type: Jar, dependsOn: javadocs) {
+    classifier = "javadocs"
+    javadocs.failOnError false
+    from javadocs.destinationDir
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_KEY')
+    publications = ["MyPublication"]
+    override = true
+    pkg {
+        repo = "cloth"
+        name = "basic-math"
+        userOrg = "shedaniel"
+        licenses = ["Unlicense"]
+        version {
+            name = project.version
+            vcsTag = project.version
+            released = new Date()
+            desc = "Cloth Basic Math"
+            githubRepo = 'shedaniel/BasicMath'
+            websiteUrl = 'https://github.com/shedaniel/BasicMath'
+            issueTrackerUrl = 'https://github.com/shedaniel/BasicMath/issues'
+            vcsUrl = 'https://github.com/shedaniel/BasicMath.git'
+            gpg {
+                sign = true
+            }
+        }
+    }
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            artifact(jar)
+            artifact(sourcesJar)
+            artifact(javadocsJar)
+            groupId 'me.shedaniel.cloth'
+            artifactId 'basic-math'
+            version = project.version
+        }
+    }
+
+    repositories {
+    }
+}

@@ -1,0 +1,16 @@
+.gradle/
+.classpath
+.project
+.metadata
+.settings
+*.launch
+*.iml
+.idea
+*.ipr
+*.iws
+build/
+out/
+classes/
+private.properties
+Thumbs.db
+.DS_Store
