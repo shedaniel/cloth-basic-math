@@ -1,4 +1,4 @@
-package me.shedaniel.math.api;
+package me.shedaniel.math;
 
 public final class Rectangle implements Cloneable {
     public int x;

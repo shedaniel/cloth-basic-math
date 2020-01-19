@@ -1,4 +1,4 @@
-package me.shedaniel.math.api;
+package me.shedaniel.math;
 
 public final class Point implements Cloneable {
     public int x;

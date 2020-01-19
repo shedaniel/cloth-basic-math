@@ -1,4 +1,4 @@
-package me.shedaniel.math.api;
+package me.shedaniel.math;
 
 public final class Dimension implements Cloneable {
     public int width;
