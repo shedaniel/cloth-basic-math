@@ -1,6 +1,6 @@
 package me.shedaniel.math;
 
-public final class Rectangle implements Cloneable {
+public class Rectangle implements Cloneable {
     public int x;
     public int y;
     public int width;

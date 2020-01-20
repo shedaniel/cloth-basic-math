@@ -1,6 +1,6 @@
 package me.shedaniel.math;
 
-public final class Dimension implements Cloneable {
+public class Dimension implements Cloneable {
     public int width;
     public int height;
     

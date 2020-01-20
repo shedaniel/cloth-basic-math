@@ -1,6 +1,6 @@
 package me.shedaniel.math;
 
-public final class Point implements Cloneable {
+public class Point implements Cloneable {
     public int x;
     public int y;
     
