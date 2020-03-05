@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "basic-math",
+  "id": "cloth-basic-math",
   "name": "Cloth Basic Math",
   "version": "${version}",
   "authors": [
