@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'me.shedaniel.cloth'
-version '0.4.1'
+version '0.5.0'
 
 sourceCompatibility = 1.8
 
@@ -48,7 +48,7 @@ bintray {
     user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
     key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_KEY')
     publications = ["MyPublication"]
-    override = true
+    publish = true
     pkg {
         repo = "cloth"
         name = "basic-math"
