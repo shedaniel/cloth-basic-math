@@ -15,15 +15,15 @@ public final class Color {
         return new Color(0xFF000000 | color);
     }
     
-    public static Color ofRGB(float r, float b, float g) {
+    public static Color ofRGB(float r, float g, float b) {
         return ofRGBA(r, g, b, 1f);
     }
     
-    public static Color ofRGB(int r, int b, int g) {
+    public static Color ofRGB(int r, int g, int b) {
         return ofRGBA(r, g, b, 255);
     }
     
-    public static Color ofRGBA(float r, float b, float g, float a) {
+    public static Color ofRGBA(float r, float g, float b, float a) {
         return ofRGBA(
                 (int) (r * 255 + 0.5),
                 (int) (g * 255 + 0.5),
@@ -32,7 +32,7 @@ public final class Color {
         );
     }
     
-    public static Color ofRGBA(int r, int b, int g, int a) {
+    public static Color ofRGBA(int r, int g, int b, int a) {
         return new Color(
                 ((a & 0xFF) << 24) |
                 ((r & 0xFF) << 16) |
