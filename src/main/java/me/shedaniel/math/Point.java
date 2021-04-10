@@ -1,5 +1,7 @@
 package me.shedaniel.math;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 public class Point implements Cloneable {
     public int x;
     public int y;
@@ -72,6 +74,6 @@ public class Point implements Cloneable {
     
     @Override
     public String toString() {
-        return getClass().getName() + "[x=" + x + ",y=" + y + "]";
+        return ReflectionToStringBuilder.reflectionToString(this);
     }
 }

@@ -1,5 +1,7 @@
 package me.shedaniel.math;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 public class Dimension implements Cloneable {
     public int width;
     public int height;
@@ -62,7 +64,7 @@ public class Dimension implements Cloneable {
     
     @Override
     public String toString() {
-        return getClass().getName() + "[width=" + width + ",height=" + height + "]";
+        return ReflectionToStringBuilder.reflectionToString(this);
     }
     
     @Override

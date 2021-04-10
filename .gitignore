@@ -14,3 +14,4 @@ classes/
 private.properties
 Thumbs.db
 .DS_Store
+out.map

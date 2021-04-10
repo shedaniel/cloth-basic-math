@@ -1,25 +1,32 @@
+import proguard.gradle.ProGuardTask
+
+buildscript {
+    repositories {
+        mavenLocal()
+        google()
+    }
+
+    dependencies {
+        classpath 'com.guardsquare:proguard-gradle:7.0.1'
+    }
+}
+
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'maven'
-    id 'signing'
-    id 'com.jfrog.bintray' version '1.8.4'
 }
 
 group 'me.shedaniel.cloth'
-version '0.5.1'
+version '0.5.2'
 
-sourceCompatibility = 1.8
+sourceCompatibility = targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-}
-
-jar {
-    from "LICENSE.md"
+    implementation "org.apache.commons:commons-lang3:3.5"
 }
 
 processResources {
@@ -34,48 +41,27 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
-task javadocs(type: Javadoc) {
-    source = sourceSets.main.allJava
+def proguardJarOut = file(jar.archiveFile.get().getAsFile().absolutePath.replace(".jar", "-min.jar"))
+
+task proguardJar(type: ProGuardTask, dependsOn: jar) {
+    configuration './proguard.conf'
+    verbose
+    injars jar.archiveFile.get().getAsFile()
+    outjars proguardJarOut
+    libraryjars files(configurations.compileClasspath)
+    printmapping 'out.map'
 }
 
-task javadocsJar(type: Jar, dependsOn: javadocs) {
-    classifier = "javadocs"
-    javadocs.failOnError false
-    from javadocs.destinationDir
-}
-
-bintray {
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_KEY')
-    publications = ["MyPublication"]
-    publish = true
-    pkg {
-        repo = "cloth"
-        name = "basic-math"
-        userOrg = "shedaniel"
-        licenses = ["Unlicense"]
-        version {
-            name = project.version
-            vcsTag = project.version
-            released = new Date()
-            desc = "Cloth Basic Math"
-            githubRepo = 'shedaniel/BasicMath'
-            websiteUrl = 'https://github.com/shedaniel/BasicMath'
-            issueTrackerUrl = 'https://github.com/shedaniel/BasicMath/issues'
-            vcsUrl = 'https://github.com/shedaniel/BasicMath.git'
-            gpg {
-                sign = true
-            }
-        }
-    }
-}
+build.dependsOn proguardJar
+build.dependsOn sourcesJar
 
 publishing {
     publications {
         MyPublication(MavenPublication) {
-            artifact(jar)
+            artifact(proguardJarOut) {
+                builtBy proguardJar
+            }
             artifact(sourcesJar)
-            artifact(javadocsJar)
             groupId 'me.shedaniel.cloth'
             artifactId 'basic-math'
             version = project.version
@@ -83,5 +69,14 @@ publishing {
     }
 
     repositories {
+        if (System.getenv("MAVEN_PASS") != null) {
+            maven {
+                url = "https://deploy.shedaniel.me/"
+                credentials {
+                    username = "shedaniel"
+                    password = System.getenv("MAVEN_PASS")
+                }
+            }
+        }
     }
 }
