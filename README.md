@@ -2,7 +2,7 @@
 
 ```groovy
 repositories {
-    jcenter()
+    maven { url "https://maven.shedaniel.me"}
 }
 
 dependencies {
