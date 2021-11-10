@@ -2,36 +2,32 @@ package me.shedaniel.math;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-public class Point implements Cloneable {
-    public int x;
-    public int y;
+public class FloatingPoint implements Cloneable {
+    public double x;
+    public double y;
     
-    public Point() {
+    public FloatingPoint() {
         this(0, 0);
     }
     
-    public Point(Point p) {
+    public FloatingPoint(Point p) {
         this(p.x, p.y);
     }
     
-    public Point(FloatingPoint p) {
+    public FloatingPoint(FloatingPoint p) {
         this(p.x, p.y);
     }
     
-    public Point(double x, double y) {
-        this((int) x, (int) y);
-    }
-    
-    public Point(int x, int y) {
+    public FloatingPoint(double x, double y) {
         this.x = x;
         this.y = y;
     }
     
-    public int getX() {
+    public double getX() {
         return x;
     }
     
-    public int getY() {
+    public double getY() {
         return y;
     }
     
@@ -44,29 +40,29 @@ public class Point implements Cloneable {
     }
     
     @Override
-    public Point clone() {
-        return getLocation();
+    public FloatingPoint clone() {
+        return getFloatingLocation();
     }
     
     public void setLocation(double x, double y) {
-        this.x = (int) Math.floor(x + 0.5);
-        this.y = (int) Math.floor(y + 0.5);
-    }
-    
-    public void move(int x, int y) {
         this.x = x;
         this.y = y;
     }
     
-    public void translate(int dx, int dy) {
+    public void move(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+    
+    public void translate(double dx, double dy) {
         this.x += dx;
         this.y += dy;
     }
     
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Point) {
-            Point pt = (Point) obj;
+        if (obj instanceof FloatingPoint) {
+            FloatingPoint pt = (FloatingPoint) obj;
             return (x == pt.x) && (y == pt.y);
         }
         return super.equals(obj);
@@ -75,8 +71,8 @@ public class Point implements Cloneable {
     @Override
     public int hashCode() {
         int result = 1;
-        result = 31 * result + x;
-        result = 31 * result + y;
+        result = 31 * result + Double.hashCode(x);
+        result = 31 * result + Double.hashCode(y);
         return result;
     }
     
